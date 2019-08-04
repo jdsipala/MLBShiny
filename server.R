@@ -20,11 +20,12 @@ shinyServer(function(input,output){
   })
 
   output$pitchers = renderPlot(
-    pitcherWins %>% 
-      filter(winning_pitcher_name == input$winning_pitcher_name) %>% 
-      ggplot(aes(x = winning_pitcher_name, y = wins)) +
+    seasonWins %>% 
+      filter(pitchers.winning_pitcher_name == input$pitchers.winning_pitcher_name) %>% 
+      ggplot(aes(x = pitchers.seasonYear, y = V1)) +
       geom_col(fill = "red") +
-      ggtitle("Number of Wins")
+      labs(x = "Year", y = "Wins") +
+      ggtitle("Career Results")
   )
   
 })

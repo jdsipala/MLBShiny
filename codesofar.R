@@ -131,4 +131,21 @@ write.csv(pitcherWins, file = "pitcherWins.csv")
 #####
 
 
+##### second pitchers index
+pitchers = mlbdata %>% mutate(wins = c(1,nrow(mlbdata$winning_pitcher_name),each =1)) %>% select(winning_pitcher_name,wins,seasonYear)
+pitchers %>% group_by(.,seasonYear,winning_pitcher_name)
+
+counts <- ddply(pitchers, .(pitchers$winning_pitcher_name, pitchers$seasonYear), nrow)
+N <- 75
+seasonWins = counts[-(1:75),]
+seasonWins
+# seasonWins%>% 
+#   rename(
+#     sepal_length = Sepal.Length,
+#     sepal_width = Sepal.Width
+#   )
+
 #####
+write.csv(seasonWins, file = "seasonWins.csv")
+#####
+

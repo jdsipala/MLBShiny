@@ -11,6 +11,7 @@ library(dplyr)
 KsDF <- read.csv(file = "./avgKsDF.csv")
 noHitters <- read.csv(file = "./noHitters.csv")
 pitcherWins <- read.csv(file = "./pitcherWins.csv")
+seasonWins <- read.csv(file = "./seasonWins.csv")
 
 # source("./helpers.R")
 # # 

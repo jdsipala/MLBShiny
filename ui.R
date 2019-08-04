@@ -27,12 +27,14 @@ shinyUI(dashboardPage(skin = "red",
         tabItem(tabName = "intro",
                 fluidRow(
                   column(width = 12,
-                         box(height = 200,
+                         box(height = 600,
                              title = h2(strong("Purpose"), align = "center"), width = NULL, solidHeader = TRUE, background = "navy",
                              tags$h4("This project, which includes Major League Baseball data dating back to 1910, uses statistics to show
-                                      how the game of baseball is evolving and also visualize some of this historical data")
+                                      how the game of baseball is evolving and also visualize individual player data"),
+                             img(src = "https://images.forbes.com/media/lists/53/2010/derek-jeter.jpg", width = "100%")
                             )
                          )
+                  
                         )
                 ),
         
@@ -54,9 +56,9 @@ shinyUI(dashboardPage(skin = "red",
         tabItem(tabName = "players",
                 fluidRow(
                   box(height = 150, width = 12,
-                      selectizeInput(inputId = "winning_pitcher_name",
+                      selectizeInput(inputId = "pitchers.winning_pitcher_name",
                                      label = "Player Name",
-                                     choices = pitcherWins$winning_pitcher_name)
+                                     choices = seasonWins$pitchers.winning_pitcher_name)
                                   
                       )
                 ),
@@ -65,8 +67,9 @@ shinyUI(dashboardPage(skin = "red",
                       plotOutput(outputId = "pitchers")
                       )
                 )
-                )
-        
+                ),
+        ###### hitting tab
+        tabItem(tabName = "hit")
         
         
         )
