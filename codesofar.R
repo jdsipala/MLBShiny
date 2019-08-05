@@ -10,7 +10,7 @@ head(mlbdata,5)
 nrow(mlbdata)
 
 mlbdata$number_of_game[1:5]
-### attempt at counting number of perfect games by year
+### perfect games ---- didnt use it
 
 class(mlbdata$date)
 mlbdata$seasonYear = as.character(mlbdata$date)
@@ -148,4 +148,57 @@ seasonWins
 #####
 write.csv(seasonWins, file = "seasonWins.csv")
 #####
+
+
+###### home run per rbi -- teams and years
+
+vhomerun = mlbdata %>% select(.,v_score,v_homeruns, v_name, seasonYear)
+
+vhomerun1 = ddply(vhomerun, .(v_name,seasonYear),numcolwise(sum))
+vhomerun1
+
+hhomerun = mlbdata %>% select(., h_score,h_homeruns, h_name, seasonYear)
+
+hhomerun1 = ddply(hhomerun, .(h_name,seasonYear), numcolwise(sum))
+hhomerun1 = hhomerun1 %>% dplyr::rename(v_name = h_name)
+class(hhomerun1$seasonYear)
+# 
+# homerunsRbis = ddply(merge(hhomerun1, vhomerun1, all.x=TRUE), 
+#       .(v_name, seasonYear), summarise, v_score=sum(v_score), v_homeruns= sum(v_homeruns))
+
+scores = hhomerun1$v_score + vhomerun1$v_score
+homeruns = hhomerun1$v_homeruns + vhomerun1$v_homeruns
+
+
+homerunsRbis <- subset(homerunsRbis, select = -c(v_score, v_homeruns))
+homerunsRbis[1:5,]
+battingdata = cbind(homerunsRbis,scores,homeruns)
+battingdata[1:50,]
+
+battingdata = battingdata %>% mutate(ratio = (homeruns)/(scores))
+
+battingdata2 = subset(battingdata, select = -c(scores,homeruns,v_name))
+
+ratioByYear = ddply(battingdata2,"seasonYear",numcolwise(mean))
+ratioByYear
+
+
+
+battingdata2[1:5,]
+
+leagueName = as.character(rep("MLB",nrow(ratioByYear)))
+leagueName
+
+ratioByYear$v_name = leagueName
+ratioByYear[1:5,]
+
+battingdata3 = subset(battingdata, select = -c(scores,homeruns))
+battingdata3[1:5,]
+
+finalbatting = rbind(battingdata3, ratioByYear)
+finalbatting
+
+###### 
+write.csv(finalbatting, file = "finalbatting.csv")
+######
 

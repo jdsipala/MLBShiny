@@ -28,4 +28,16 @@ shinyServer(function(input,output){
       ggtitle("Career Results")
   )
   
+  output$batting = renderPlotly({
+    finalbatting %>% 
+      filter(v_name %in% input$v_name) %>% 
+      ggplot(., aes(x = seasonYear,y = ratio)) +
+      geom_smooth(aes(group = v_name, color = v_name), se = FALSE)
+  })
+  
+  # observe({updateSelectizeInput(session, 'v_name',
+  #                               choices = unique(finalbatting$v_name),
+  #                               server = TRUE
+  #                               )})
+  
 })

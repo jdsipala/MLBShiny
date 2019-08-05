@@ -69,12 +69,24 @@ shinyUI(dashboardPage(skin = "red",
                 )
                 ),
         ###### hitting tab
-        tabItem(tabName = "hit")
+        tabItem(tabName = "hit",
+                fluidRow(
+                  box(height = 150, width = 12,
+                      selectizeInput(inputId = "v_name",
+                                     label = "Team",
+                                     choices = finalbatting$v_name)
+                    
+                  )
+                    ),
+                fluidRow(
+                  box(height = 350, width = 12,
+                         plotlyOutput("batting"))
+                
+                )
         
         
         )
-        
+        )
       )
-      
-    )
 )
+    )
