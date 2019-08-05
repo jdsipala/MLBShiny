@@ -2,7 +2,7 @@
 
 
 shinyServer(function(input,output){
-  
+  ### first graph
   output$strikeouts = renderPlotly({
     
     ggplotly(KsDF %>% 
@@ -10,7 +10,7 @@ shinyServer(function(input,output){
       geom_bar(stat = "identity", color = 'red') +
       labs(x = "Year", y = "Strikeouts", title = "Strikeouts Per Game"))
   })
-  
+  ### tab 1 graph 2
   output$noH = renderPlotly({
 
     ggplotly(noHitters %>%
@@ -18,7 +18,7 @@ shinyServer(function(input,output){
       geom_bar(stat ="identity",color = "red" ) +
       labs(x = "Year", y = "# of No Hitters", title = "No Hitters"))
   })
-
+  ### players tab graph
   output$pitchers = renderPlot(
     seasonWins %>% 
       filter(pitchers.winning_pitcher_name == input$pitchers.winning_pitcher_name) %>% 
@@ -27,7 +27,7 @@ shinyServer(function(input,output){
       labs(x = "Year", y = "Wins") +
       ggtitle("Career Results")
   )
-  
+  ### batting tab graph
   output$batting = renderPlotly({
     finalbatting %>% 
       filter(v_name %in% input$v_name) %>% 
@@ -35,9 +35,5 @@ shinyServer(function(input,output){
       geom_smooth(aes(group = v_name, color = v_name), se = FALSE)
   })
   
-  # observe({updateSelectizeInput(session, 'v_name',
-  #                               choices = unique(finalbatting$v_name),
-  #                               server = TRUE
-  #                               )})
-  
+
 })

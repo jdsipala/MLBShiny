@@ -38,7 +38,7 @@ shinyUI(dashboardPage(skin = "red",
                         )
                 ),
         
-        #### Historical PITCHING TAB
+        #### Historical pitching
         tabItem(tabName = "pitch",
                 fluidRow(
                   box(width = 12,
@@ -74,7 +74,8 @@ shinyUI(dashboardPage(skin = "red",
                   box(height = 150, width = 12,
                       selectizeInput(inputId = "v_name",
                                      label = "Team",
-                                     choices = finalbatting$v_name)
+                                     choices = finalbatting$v_name,
+                                     multiple = TRUE)
                     
                   )
                     ),
